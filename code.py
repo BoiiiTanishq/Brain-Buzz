@@ -7,7 +7,6 @@ DATA_FILE = "quizzes.json"
 
 
 def load_quizzes():
-    """Load all quizzes from the JSON data file into a dictionary."""
     if not os.path.exists(DATA_FILE):
         return {}
     try:
@@ -19,13 +18,11 @@ def load_quizzes():
 
 
 def save_quizzes(quizzes):
-    """Save the full quizzes dictionary back to the JSON data file."""
     with open(DATA_FILE, "w") as f:
         json.dump(quizzes, f, indent=2)
 
 
 def get_nonempty_input(prompt):
-    """Keep asking until the user provides a non-empty string."""
     while True:
         value = input(prompt).strip()
         if value:
@@ -34,7 +31,6 @@ def get_nonempty_input(prompt):
 
 
 def get_yes_no(prompt):
-    """Ask a yes/no question and return True/False."""
     while True:
         answer = input(prompt + " (y/n): ").strip().lower()
         if answer in ("y", "yes"):
@@ -45,7 +41,6 @@ def get_yes_no(prompt):
 
 
 def get_choice_in_range(prompt, valid_options):
-    """Ask for input until it matches one of the valid_options (case-insensitive)."""
     valid_upper = [str(v).upper() for v in valid_options]
     while True:
         choice = input(prompt).strip().upper()
@@ -55,7 +50,6 @@ def get_choice_in_range(prompt, valid_options):
 
 
 def create_quiz(quizzes):
-    """Interactively build a new quiz and add it to the quizzes dictionary."""
     print("\n--- Create a New Quiz ---")
     title = get_nonempty_input("Enter a title for your quiz: ")
 
@@ -110,7 +104,6 @@ def create_quiz(quizzes):
 
 
 def choose_quiz(quizzes):
-    """Let the user pick an existing quiz by number. Returns the title or None."""
     if not quizzes:
         print("\nNo quizzes available yet. Create one first!")
         return None
@@ -131,7 +124,6 @@ def choose_quiz(quizzes):
 
 
 def take_quiz(quizzes):
-    """Run a quiz attempt: ask each question, collect answers, then score it."""
     title = choose_quiz(quizzes)
     if title is None:
         return
@@ -144,7 +136,7 @@ def take_quiz(quizzes):
 
     print(f"\n--- Starting Quiz: {title} ---")
     score = 0
-    results = []  # keep per-question results to show a review at the end
+    results = [] 
     option_letters = ["A", "B", "C", "D", "E", "F"]
 
     for display_num, q_index in enumerate(order, start=1):
@@ -174,7 +166,6 @@ def take_quiz(quizzes):
 
 
 def show_final_score(title, score, total, results):
-    """Display the final score, percentage, and a brief review."""
     percentage = (score / total) * 100 if total > 0 else 0
 
     print("\n" + "=" * 40)
@@ -201,7 +192,6 @@ def show_final_score(title, score, total, results):
 
 
 def view_quizzes(quizzes):
-    """Print a summary of all stored quizzes."""
     if not quizzes:
         print("\nNo quizzes have been created yet.")
         return
@@ -211,7 +201,6 @@ def view_quizzes(quizzes):
 
 
 def delete_quiz(quizzes):
-    """Let the user delete a quiz by name."""
     title = choose_quiz(quizzes)
     if title is None:
         return
